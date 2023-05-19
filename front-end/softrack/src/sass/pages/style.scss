@@ -1,0 +1,285 @@
+  /*sass --watch src/sass/style.scss:src/index.css*/
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: $cor5;
+  }
+
+  html,
+  body {
+    font: normal normal normal 12px/1.5 Verdana,Arial, Sans-Serif;
+    background-color: $cor3;
+  }
+.fundoPopUp{
+  background-color: $cor7;
+  top: 0;
+  right: -27.5%;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+  @mixin mpw($margin, $padding, $width) {
+    margin: $margin;
+    padding: $padding;
+    width: $width;
+  }
+  ul{
+    list-style: none;
+    text-align: left;
+    li:first-of-type{
+      font-size: 12pt;
+      margin: 20px 0px 0px 0px;
+    }
+  }
+  button {
+    color: $cor1;
+    border:0; 
+    text-decoration: underline;
+    padding: 2px 15px;
+    border-radius: 10px;
+    background-color: $cor4;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+  input {
+    color: $cor1;
+    border-radius: 10px;
+    @include mpw(20px 0px, 10px, 100%)
+  }
+
+  /*---------------------------------------LOGIN------------------------------*/
+  #formulario {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 50px;
+    background: linear-gradient(128deg, $cor1 0%, $cor2 100%);
+    box-shadow: 5px 5px 10px $cor2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+  }
+
+  #formulario :nth-child(1) {
+    margin-bottom: 50px;
+  }
+
+  #formulario :nth-child(2) {
+    text-align: left;
+  }
+
+  #login {
+    width: 100%;
+
+    label {
+      font-size: 15pt;
+    }
+
+    span {
+      strong {
+        font-size: 13pt;
+        color: rgb(255, 0, 0);
+        position: relative;
+        top: -15px;
+      }
+    }
+  }
+
+  /*--------------------------------------LOGIN------------------------------*/
+  /*-------------------------------------LOGOUT-----------------------------*/
+  #usuario {
+    text-align: right;
+    right: 10px;
+    position: fixed;
+  }
+  #logout{
+    position: absolute;
+    right: 10px;
+    top:5px;
+  }
+
+  /*-------------------------------------LOGOUT-----------------------------*/
+  main {
+    display: grid;
+    grid-template-areas: 'aside conteudo';
+    grid-template-rows: 100vh;
+    grid-template-columns: 250px calc(100% - 250px);
+    gap: 10px;
+    max-width: 1920px;
+    width: 100%;
+    border-radius: 20px;
+    @include mpw(0 auto, 0px, 98%);
+
+    .conteudo {
+      grid-area: conteudo;
+      position: relative;
+    }
+    #Tabela {
+      height: 100%;
+      overflow: auto;
+      tbody{
+      tr{
+        font: normal normal normal 11px/1.5 Arial,Verdana, Sans-Serif;
+      }
+    }
+      h2{
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .dashBoard {
+    display: grid;
+    grid-template-areas: 'grafico1 grafico1 grafico1 grafico1'
+                                      'grafico2 grafico3 grafico3 grafico3'
+                                      'grafico4 grafico4 grafico4 grafico5';
+    grid-template-rows: calc(100vh/3) calc(100vh/3) calc(100vh/3 - 20px);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  #aside {
+    grid-area: aside;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    select {
+      option {
+        background-color: $cor5;
+        color: $cor2;
+        padding: 6px 6px;
+        border-radius: 10px;
+        margin: 2px;
+      }
+
+      option:hover {
+        background-color: $cor5;
+        transition: 0.5s;
+      }
+    }
+
+    .blocos {
+      @include mpw(0px 0px 40px, 0px 10px, 90%);
+
+    }
+  }
+
+  #grafico1 {
+    grid-area: grafico1;
+  }
+
+  #grafico2 {
+    grid-area: grafico2;
+  }
+
+  #grafico3 {
+    grid-area: grafico3;
+  }
+
+  #grafico4 {
+    grid-area: grafico4;
+  }
+
+  #grafico5 {
+    grid-area: grafico5;
+    button {
+      float: right;
+      margin-top: 3px;
+    }
+  }
+  .filhos {
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, $cor1, $cor2 69%,$cor1);
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  #nomeUsuarios,
+  #nomeMaquinas,
+  #nomeMotoristas {
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+  }
+
+  /*---------------------------------------TABELA-----------------------------------*/
+  table {
+    text-align: center;
+    border-collapse: collapse;
+    max-width: 100px;
+    position: relative;
+    border: 1px solid $cor5;
+    margin: 0 auto;
+    thead {
+      tr {
+        th {
+          padding: 10px 23.1px;
+          position: sticky;
+          top: -20px;
+          height: 21px;
+          background-color: $cor2;
+          color: $cor5;
+          font-weight: bold;
+          border: 2px solid $cor5;
+          border-collapse: collapse;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        height: 40px;
+        th {
+          color: $cor1;
+          padding: 0 5px;
+          border: 2px solid $cor6;
+          background-color: $cor3;
+        }
+      }
+
+      tr:nth-child(2n) {
+        th {
+          color: $cor1;
+          background-color: $cor5;
+        }
+      }
+    }
+  }
+  #edita_Maquinas{
+    animation-name: slidein;
+    animation-duration: 0.3s;
+    background-color: $cor1;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    position: absolute;
+    z-index: 9999;
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 5px 5px 20px $cor1;
+  }
+
+  @keyframes slidein {
+    0% {
+      scale: 0;
+    }
+    70% {
+      scale: 1.1;
+    }
+    100%{
+      scale: 1;
+    }
+  }
+  

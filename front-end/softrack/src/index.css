@@ -1,0 +1,271 @@
+/*VARIAVEIS*/
+/*VARIAVEIS*/
+/*sass --watch src/sass/style.scss:src/index.css*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #ffffff;
+}
+
+html,
+body {
+  font: normal normal normal 12px/1.5 Verdana, Arial, Sans-Serif;
+  background-color: #e2ecf5;
+}
+
+.fundoPopUp {
+  background-color: rgba(18, 72, 133, 0.662745098);
+  top: 0;
+  right: -27.5%;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+}
+ul li:first-of-type {
+  font-size: 12pt;
+  margin: 20px 0px 0px 0px;
+}
+
+button {
+  color: #0a2747;
+  border: 0;
+  text-decoration: underline;
+  padding: 2px 15px;
+  border-radius: 10px;
+  background-color: #ffdf99;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+input {
+  color: #0a2747;
+  border-radius: 10px;
+  margin: 20px 0px;
+  padding: 10px;
+  width: 100%;
+}
+
+/*---------------------------------------LOGIN------------------------------*/
+#formulario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 50px;
+  background: linear-gradient(128deg, #0a2747 0%, #124885 100%);
+  box-shadow: 5px 5px 10px #124885;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+}
+
+#formulario :nth-child(1) {
+  margin-bottom: 50px;
+}
+
+#formulario :nth-child(2) {
+  text-align: left;
+}
+
+#login {
+  width: 100%;
+}
+#login label {
+  font-size: 15pt;
+}
+#login span strong {
+  font-size: 13pt;
+  color: rgb(255, 0, 0);
+  position: relative;
+  top: -15px;
+}
+
+/*--------------------------------------LOGIN------------------------------*/
+/*-------------------------------------LOGOUT-----------------------------*/
+#usuario {
+  text-align: right;
+  right: 10px;
+  position: fixed;
+}
+
+#logout {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+/*-------------------------------------LOGOUT-----------------------------*/
+main {
+  display: grid;
+  grid-template-areas: "aside conteudo";
+  grid-template-rows: 100vh;
+  grid-template-columns: 250px calc(100% - 250px);
+  gap: 10px;
+  max-width: 1920px;
+  width: 100%;
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 0px;
+  width: 98%;
+}
+main .conteudo {
+  grid-area: conteudo;
+  position: relative;
+}
+main #Tabela {
+  height: 100%;
+  overflow: auto;
+}
+main #Tabela tbody tr {
+  font: normal normal normal 11px/1.5 Arial, Verdana, Sans-Serif;
+}
+main #Tabela h2 {
+  margin-bottom: 20px;
+}
+
+.dashBoard {
+  display: grid;
+  grid-template-areas: "grafico1 grafico1 grafico1 grafico1" "grafico2 grafico3 grafico3 grafico3" "grafico4 grafico4 grafico4 grafico5";
+  grid-template-rows: 33.3333333333vh 33.3333333333vh calc(33.3333333333vh - 20px);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+#aside {
+  grid-area: aside;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+}
+#aside select option {
+  background-color: #ffffff;
+  color: #124885;
+  padding: 6px 6px;
+  border-radius: 10px;
+  margin: 2px;
+}
+#aside select option:hover {
+  background-color: #ffffff;
+  transition: 0.5s;
+}
+#aside .blocos {
+  margin: 0px 0px 40px;
+  padding: 0px 10px;
+  width: 90%;
+}
+
+#grafico1 {
+  grid-area: grafico1;
+}
+
+#grafico2 {
+  grid-area: grafico2;
+}
+
+#grafico3 {
+  grid-area: grafico3;
+}
+
+#grafico4 {
+  grid-area: grafico4;
+}
+
+#grafico5 {
+  grid-area: grafico5;
+}
+#grafico5 button {
+  float: right;
+  margin-top: 3px;
+}
+
+.filhos {
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #0a2747, #124885 69%, #0a2747);
+  width: 100%;
+  margin: 0 auto;
+}
+
+#nomeUsuarios,
+#nomeMaquinas,
+#nomeMotoristas {
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
+/*---------------------------------------TABELA-----------------------------------*/
+table {
+  text-align: center;
+  border-collapse: collapse;
+  max-width: 100px;
+  position: relative;
+  border: 1px solid #ffffff;
+  margin: 0 auto;
+}
+table thead tr th {
+  padding: 10px 23.1px;
+  position: sticky;
+  top: -20px;
+  height: 21px;
+  background-color: #124885;
+  color: #ffffff;
+  font-weight: bold;
+  border: 2px solid #ffffff;
+  border-collapse: collapse;
+}
+table tbody tr {
+  height: 40px;
+}
+table tbody tr th {
+  color: #0a2747;
+  padding: 0 5px;
+  border: 2px solid #838383;
+  background-color: #e2ecf5;
+}
+table tbody tr:nth-child(2n) th {
+  color: #0a2747;
+  background-color: #ffffff;
+}
+
+#edita_Maquinas {
+  animation-name: slidein;
+  animation-duration: 0.3s;
+  background-color: #0a2747;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  position: absolute;
+  z-index: 9999;
+  border-radius: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 5px 20px #0a2747;
+}
+
+@keyframes slidein {
+  0% {
+    scale: 0;
+  }
+  70% {
+    scale: 1.1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
