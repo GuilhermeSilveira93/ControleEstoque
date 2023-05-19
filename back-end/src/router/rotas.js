@@ -1,15 +1,15 @@
 const express = require('express')
-const consultasMaquinas = require('../controllers/consultasMaquinas');
+const  teste  = require('../controllers/teste')
 const rotas = express.Router()
 
 /*API*/
 
 rotas
-  .post("/consultar/tabelaveiculos.json", async (req, res) => {
+  .get("/teste.json", async (req, res) => {
     try {
-      const { IDUSUARIO } = req.body.params.idUsuario[0]
-      const tabelaveiculos = await consultasMaquinas.TabelaVeiculos(IDUSUARIO)
-      return res.status(200).json(tabelaveiculos)
+      /*const { IDUSUARIO } = req.body.params.idUsuario[0]*/
+      const teste2 = await teste.teste()
+      return res.status(200).json(teste2)
     } catch (error) {
       res.status(404).json({ message: error.message })
     }
