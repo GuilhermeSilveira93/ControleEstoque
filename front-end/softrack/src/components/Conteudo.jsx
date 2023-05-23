@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import DashBoard from './Telas/DashBoard/DashBoard';
-import TabelaMaquinas from './Telas/Cadastros/Maquinas/TabelaMaquinas';
-import TabelaUsuarios from './Telas/Cadastros/Usuarios/TabelaUsuarios';
-import TabelaOperadores from './Telas/Cadastros/Operadores/TabelaOperadores';
+import Estoque from './Telas/Cadastros/Estoque/Estoque';
+import Entrada from './Telas/Cadastros/Estoque/Entrada';
+import Saida from './Telas/Cadastros/Estoque/Saida';
 
 export default class Conteudo extends Component {
   render() {
-    const { setMaquinas, setUsuarios, setOperadores, logout } = this.props
+    const {entrada,estoque,saida} = this.props
     return (
       <div className="conteudo">
-        {setMaquinas === false && setOperadores === false && setUsuarios === false ? <DashBoard /> : setMaquinas === true ? <TabelaMaquinas /> : setUsuarios === true ? <TabelaUsuarios /> : setOperadores === true ? <TabelaOperadores /> : 'NÃO FOI POSSIVEL GERAR O CONTEUDO'}
-        <button value="logout" id="logout" onClick={() => logout()}>Sair</button>
+        {entrada === true ? <Entrada /> :
+        estoque === true?<Estoque /> :
+        saida === true?<Saida /> : <Estoque />}
+        
       </div>
     )
   }

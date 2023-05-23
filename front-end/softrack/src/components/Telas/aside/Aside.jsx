@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 
 class Aside extends Component {
   render() {
-    const { id, classe, setUsuarios, setMaquinas, setOperadores } = this.props;
+    const {showEntrada,showSaida,showEstoque} = this.props;
     return (
-      <aside id={id} className={classe}>
-        <div style={{ textAlign: 'center' }}>
+      <aside>
+        <div>
           <h3>Olá, Produção !</h3><br />
         </div>
         <nav>
-          <h2 onClick={() => this.props.setAllFalse()} style={{ cursor: 'pointer', textAlign: 'center' }}>DashBoard</h2>
           <ul>
-              <li><h1>Cadastros</h1></li>
-              <li onClick={()=>setUsuarios()} style={{cursor:'pointer'}}><h3>Usuários</h3></li>
-              <li onClick={()=>setMaquinas()} style={{ cursor: 'pointer' }}><h3>Maquinas</h3></li>
-              <li onClick={()=>setOperadores()} style={{cursor:'pointer'}}><h3>Operadores</h3></li>
+              <li onClick={() => showEstoque( )} style={{cursor:'pointer'}}><h1>Estoque</h1></li>
+              <li onClick={() => showEntrada()} style={{cursor:'pointer'}}><h3>Entrada</h3></li>
+              <li onClick={() => showSaida()} style={{cursor:'pointer'}}><h3>Saida</h3></li>
           </ul>
         </nav>
       </aside>

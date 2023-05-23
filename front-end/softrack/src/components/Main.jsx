@@ -2,36 +2,45 @@ import React, { Component } from 'react';
 import Aside from "./Telas/aside/Aside";
 import Conteudo from './Conteudo';
 export default class Main extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
-      maquinas: false,
-      operadores: false,
-      usuarios: false
-    }/*
-    this.setMaquinas = this.setMaquinas.bind(this);
-    this.setOperadores = this.setOperadores.bind(this);
-    this.setUsuarios = this.setUsuarios.bind(this);
-    this.setAllFalse = this.setAllFalse.bind(this)*/
+      entrada:false,
+      saida:false,
+      estoque:false,
+    }
+    this.showEntrada = this.showEntrada.bind(this)
+    this.showSaida = this.showSaida.bind(this)
+    this.showEstoque = this.showEstoque.bind(this)
   }
-  setMaquinas(){
-    this.setState({ maquinas: true, operadores:false, usuarios:false })
+  showEntrada(){
+    this.setState({
+      entrada:true,
+      saida:false,
+      estoque:false
+    })
   }
-  setOperadores(){
-    this.setState({ maquinas: false, operadores:true, usuarios:false })
+  showSaida(){
+    this.setState({
+      entrada:false,
+      saida:true,
+      estoque:false
+    })
   }
-  setUsuarios(){
-    this.setState({ maquinas: false, operadores:false, usuarios:true })
-  }
-  setAllFalse(){
-    this.setState({ maquinas: false, operadores:false, usuarios:false })
+  showEstoque(){
+    this.setState({
+      entrada:false,
+      saida:false,
+      estoque:true
+    })
   }
   render() {
+    const {entrada,saida,estoque} = this.state
     return (
       <>
         <main>
-          <Aside UserName={this.props.UserName} id='aside' classe='filhos' setMaquinas={this.setMaquinas} setOperadores={this.setOperadores} setUsuarios={this.setUsuarios} setAllFalse={this.setAllFalse}/>
-          <Conteudo setMaquinas={this.state.maquinas} setOperadores={this.state.operadores} setUsuarios={this.state.usuarios} setAllFalse={this.setAllFalse} logout={this.props.logout}/>
+          <Aside showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada}/>
+          <Conteudo entrada={entrada} saida={saida} estoque={estoque}/>
         </main>
       </>
     );
