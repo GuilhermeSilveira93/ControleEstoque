@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import api from '../../../../api/Api';
-import Header from "../../Header";
+import Header from "../Header";
 
 export default class Saida extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class Saida extends Component {
     };
   }
   componentDidMount() {
-    api
+    /*api
       .post('consultar/tabelaveiculos.json', {
         params: {
           idUsuario: JSON.parse(sessionStorage.getItem('Usuario')),
@@ -19,10 +19,9 @@ export default class Saida extends Component {
       .then((resposta) => {
         this.setState({ tabelaVeiculo: resposta.data });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error));*/
   };
   render() {
-    
     return (
       <Header titulo={'Saida de Estoque'}/>
     );

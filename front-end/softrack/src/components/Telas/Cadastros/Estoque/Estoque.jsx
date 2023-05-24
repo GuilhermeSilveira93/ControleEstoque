@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import api from '../../../../api/Api';
-import Header from "../../Header";
+import Header from "../Header";
 
 export default class Estoque extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class Estoque extends Component {
     };
   }
   componentDidMount() {
-    api
+    /*api
       .post('consultar/tabelaveiculos.json', {
         params: {
           idUsuario: JSON.parse(sessionStorage.getItem('Usuario')),
@@ -19,7 +19,7 @@ export default class Estoque extends Component {
       .then((resposta) => {
         this.setState({ tabelaVeiculo: resposta.data });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error));*/
   };
   render() {
     
