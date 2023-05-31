@@ -1,17 +1,43 @@
 const express = require('express')
-const  teste  = require('../controllers/teste')
+const produtos = require('../controllers/produtos')
 const rotas = express.Router()
 
 /*API*/
 
 rotas
-  .get("/teste.json", async (req, res) => {
+  .get("/inclusao.json", async (req, res) => {
     try {
-      /*const { IDUSUARIO } = req.body.params.idUsuario[0]*/
-      const teste2 = await teste.teste()
-      return res.status(200).json(teste2)
+      //const {serial, produto, dimensoes, fornecedor, detalhes, valor, quantidade} = req.query.itens
+      req.query.itens.forEach((item, index) => {
+        const {produto, dimensoes, fornecedor, detalhes, valor, quantidade} = req.query.itens[index]
+        console.log(produto, dimensoes, fornecedor, detalhes, valor, quantidade)
+        insert = produtos.insertProdutos(produto,dimensoes,fornecedor,detalhes,valor,quantidade)          
+      })
+      return res.status(200).json(insert)
     } catch (error) {
-      res.status(404).json({ message: error.message })
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/consultaTipo.json", async (req, res) => {
+    try {
+      const tipos = await produtos.consultaTipo()
+      return res.status(200).json(tipos)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/consultaFornecedor.json", async (req, res) => {
+    try {
+      const fornecedor = await produtos.consultaFornecedor()
+      return res.status(200).json(fornecedor)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
     }
   })
 /*API*/

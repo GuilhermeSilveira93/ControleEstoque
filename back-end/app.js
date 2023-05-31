@@ -5,7 +5,6 @@ const rotas = require('./src/router/rotas')
 const cors = require('cors')
 app.use(cors())
 const path = require('path')//ajuda a mostrar para o express, onde colocaremos as views
-const { knex } = require('knex')
 app.use(rotas)//vamos colocar as rotas aqui, para não bagunçar
 
 app.use(express.static(path.join(__dirname,'build')))//aqui ficarão os arquivos estaticos

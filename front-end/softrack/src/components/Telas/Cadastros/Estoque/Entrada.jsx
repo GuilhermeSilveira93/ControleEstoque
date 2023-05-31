@@ -1,41 +1,52 @@
 import React, { Component } from "react"
-//import api from '../../../../api/Api';
+import api from '../../../../api/Api';
 import Header from "../Header";
 
 export default class Entrada extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      codigo: '',
-      produto: '',
+      produtos: [],
+      produto: 1,
       dimensoes: '',
-      fornecedor: '',
+      fornecedores: [],
+      fornecedor: 1,
       detalhes: '',
-      valor: '',
-      quantidade: '',
+      valor: 0,
+      quantidade: 0,
       itens: []
     };
     this.montarTabela = this.montarTabela.bind(this)
     this.excluirItem = this.excluirItem.bind(this)
     this.cancelar = this.cancelar.bind(this)
+    this.realizarEntrada = this.realizarEntrada.bind(this)
   }
   componentDidMount() {
-    /*api
-      .post('consultar/tabelaveiculos.json', {
-        params: {
-          idUsuario: JSON.parse(sessionStorage.getItem('Usuario')),
-        },
-      })
-      .then((resposta) => {
-        this.setState({ tabelaVeiculo: resposta.data });
-      })
-      .catch((error) => console.log(error));*/
-  };
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.itens !== prevState.itens) {
-      this.setState({ itens: this.state.itens });
-    }
+    api
+      .get('/consultaTipo.json').then((resposta) => {
+        this.setState({ produtos: resposta.data })
+      }).catch((erro) => { console.log(erro) })
+    api
+      .get('/consultaFornecedor.json').then((resposta) => {
+        this.setState({ fornecedores: resposta.data })
+      }).catch((erro) => { console.log(erro) })
   }
+  realizarEntrada(e) {
+    e.preventDefault();
+    const confirmacao = window.confirm(`Confirma a inclusão dos itens?`)
+    if (confirmacao) {
+      api
+        .get('inclusao.json', {
+          params: {
+            itens: this.state.itens
+          },
+        })
+        .then((resposta) => {
+          alert('Enviado')
+        })
+        .catch((error) => alert(error));
+    }
+  };
   excluirItem(index) {
     const { itens } = this.state
     this.setState({ itens: itens.filter(item => (item !== itens[index])) })
@@ -43,18 +54,17 @@ export default class Entrada extends Component {
   cancelar(e) {
     e.preventDefault();
     if (this.state.itens > 0) {
-      
+
     }
     const escolha = window.confirm(`Deseja mesmo CANCELAR ?\nIsso irá Desfazer tudo!`)
     if (escolha) {
-      this.setState({itens:[]})
+      this.setState({ itens: [] })
     }
   }
   montarTabela(e) {
     e.preventDefault();
-    const { codigo, produto, dimensoes, fornecedor, detalhes, valor, quantidade } = this.state
+    const { produto, dimensoes, fornecedor, detalhes, valor, quantidade } = this.state
     const dados = {
-      codigo,
       produto,
       dimensoes,
       fornecedor,
@@ -66,17 +76,16 @@ export default class Entrada extends Component {
       itens: [...prevState.itens, dados],
     }));
     this.setState({
-      codigo: "",
       produto: "",
-      dimensoes: "",
+      dimensoes: 0,
       fornecedor: "",
       detalhes: "",
-      valor: "",
-      quantidade: "",
+      valor: 0,
+      quantidade: 0,
     });
   }
   render() {
-    const { codigo, produto, dimensoes, fornecedor, detalhes, valor, quantidade, itens } = this.state
+    const { produtos, dimensoes, fornecedores, detalhes, valor, quantidade, itens } = this.state
     const { data } = this.props
     return (
       <>
@@ -84,14 +93,28 @@ export default class Entrada extends Component {
         <fieldset id="entradaMercadoria">
           <legend>Entrada de Mercadoria</legend>
           <form id="entradaEstoque">
-            <label htmlFor="Codigo">Codigo: </label>
-            <input type="text" name="Codigo" id="Codigo" min={0} value={codigo} onChange={(e) => { this.setState({ codigo: e.target.value }) }} />
             <label htmlFor="Produto">Produto: </label>
-            <input type="text" name="Produto" id="Produto" min={0} value={produto} onChange={(e) => { this.setState({ produto: e.target.value }) }} />
+            <select name="Produto" id="Produto">
+              {produtos ?
+                produtos.map(produtos => {
+                  return (
+                    <option key={produtos.ID_TIPO} value={produtos.ID_TIPO} onClick={(e) => { this.setState({ produto: e.target.value }) }}>{produtos.S_NOME}</option>
+                  )
+                })
+                : ''}
+            </select><br />
             <label htmlFor="Dimensoes">Dimensões: </label>
             <input type="text" name="Dimensoes" id="Dimensoes" min={0} value={dimensoes} onChange={(e) => { this.setState({ dimensoes: e.target.value }) }} />
             <label htmlFor="Fornecedor">Fornecedor: </label>
-            <input type="text" name="Fornecedor" id="Fornecedor" min={0} value={fornecedor} onChange={(e) => { this.setState({ fornecedor: e.target.value }) }} />
+            <select name="Fornecedor" id="Fornecedor">
+              {fornecedores ?
+                fornecedores.map(fornecedor => {
+                  return (
+                    <option key={fornecedor.ID_FORNECEDOR} value={fornecedor.ID_FORNECEDOR} onClick={(e) => { this.setState({ fornecedor: e.target.value }) }}>{fornecedor.S_NOME}</option>
+                  )
+                })
+                : ''}
+            </select><br />
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
@@ -113,7 +136,6 @@ export default class Entrada extends Component {
             {itens.length > 0 ?
               <thead>
                 <tr>
-                  <th>Codigo</th>
                   <th>Produto</th>
                   <th>Dimensoes</th>
                   <th>Fornecedor</th>
@@ -128,7 +150,6 @@ export default class Entrada extends Component {
               {itens.map((valores, index) => {
                 return (
                   <tr key={index}>
-                    <td>{valores.codigo}</td>
                     <td>{valores.produto}</td>
                     <td>{valores.dimensoes}</td>
                     <td>{valores.fornecedor}</td>
@@ -142,6 +163,11 @@ export default class Entrada extends Component {
             </tbody>
           </table>
         </div>
+        {
+          this.state.itens[0] ?
+            <button type="submit" onClick={this.realizarEntrada}>Realizar entrada</button>
+            : ''}
+
       </>
     );
   }
