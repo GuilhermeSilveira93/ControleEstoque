@@ -15,7 +15,7 @@ export default class Conteudo extends Component {
       <div className="conteudo">
         {entrada === true ? <Entrada data={dataString}/> :
         estoque === true?<Estoque /> :
-        saida === true?<Saida /> : <Estoque />}
+        saida === true?<Saida data={dataString}/> : <Estoque />}
 
       </div>
     )
