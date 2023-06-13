@@ -90,7 +90,7 @@
       text-align: center;
       border-collapse: collapse;
       position: relative;
-      border: 1px solid rgb(0, 0, 0);
+      border: 1px solid $fundo;
       margin: 0 auto;
 
       max-height: 50px;
@@ -99,10 +99,10 @@
 
       thead {
         tr {
-          border: 1px solid black;
+          border: 1px solid $fundo;
 
           th {
-            background-color: rgb(255, 255, 255);
+            background-color: $fundo;
             position: sticky;
             top: 0px;
             padding: 2px;

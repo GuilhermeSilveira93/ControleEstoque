@@ -92,17 +92,17 @@ main table {
   text-align: center;
   border-collapse: collapse;
   position: relative;
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid #202123;
   margin: 0 auto;
   max-height: 50px;
   width: 100%;
   margin-top: -1px;
 }
 main table thead tr {
-  border: 1px solid black;
+  border: 1px solid #202123;
 }
 main table thead tr th {
-  background-color: rgb(255, 255, 255);
+  background-color: #202123;
   position: sticky;
   top: 0px;
   padding: 2px;

@@ -2,15 +2,18 @@ import React, { Component } from "react"
 import api from '../../../../api/Api';
 import Header from "../Header";
 
-export default class Entrada extends Component {
+export default class Saida extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      empresas:[],
+      empresa:0,
+      clientes:[],
+      cliente:0,
       produtos: [],
-      produto: 1,
+      produto: 0,
+      produtoNome: '',
       dimensoes: '',
-      fornecedores: [],
-      fornecedor: 1,
       detalhes: '',
       valor: 0,
       quantidade: 0,
@@ -19,33 +22,50 @@ export default class Entrada extends Component {
     this.montarTabela = this.montarTabela.bind(this)
     this.excluirItem = this.excluirItem.bind(this)
     this.cancelar = this.cancelar.bind(this)
-    this.realizarEntrada = this.realizarEntrada.bind(this)
+    this.realizarSaida = this.realizarSaida.bind(this)
+  }
+  componentDidUpdate(prevProps,prevState){
+    if (this.state.empresa !== prevState.empresa) {
+      api
+      .get('/consultaClientes.json',{
+        params: {
+          id_empresa: this.state.empresa,
+        },
+      }).then((resposta) => {
+        this.setState({ clientes: resposta.data })
+      }).catch((erro) => { console.log(erro) })
+    }
   }
   componentDidMount() {
     api
-      .get('/consultaTipo.json').then((resposta) => {
-        this.setState({ produtos: resposta.data })
+      .get('/consultaEmpresa.json').then((resposta) => {
+        this.setState({ empresas: resposta.data })
       }).catch((erro) => { console.log(erro) })
     api
-      .get('/consultaFornecedor.json').then((resposta) => {
-        this.setState({ fornecedores: resposta.data })
+      .get('/consultaProduto.json').then((resposta) => {
+        this.setState({ produtos: resposta.data })
       }).catch((erro) => { console.log(erro) })
   }
-  realizarEntrada(e) {
+  realizarSaida(e) {
     e.preventDefault();
-    const confirmacao = window.confirm(`Confirma a inclusão dos itens?`)
+    if (this.state.cliente !== 0) {
+    const confirmacao = window.confirm(`Confirma a SAIDA dos itens?`)
     if (confirmacao) {
       api
-        .get('inclusao.json', {
+        .get('saida.json', {
           params: {
+            cliente: this.state.cliente,
             itens: this.state.itens
           },
         })
-        .then((resposta) => {
+        .then(() => {
           alert('Enviado')
         })
         .catch((error) => alert(error));
     }
+  }else{
+    window.alert('Selecione um Cliente')
+  }
   };
   excluirItem(index) {
     const { itens } = this.state
@@ -63,29 +83,47 @@ export default class Entrada extends Component {
   }
   montarTabela(e) {
     e.preventDefault();
-    const { produto, dimensoes, fornecedor, detalhes, valor, quantidade } = this.state
-    const dados = {
-      produto,
-      dimensoes,
-      fornecedor,
-      detalhes,
-      valor,
-      quantidade,
+    const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens } = this.state
+    if (produto !== 0) {
+    let existente = false
+    itens.forEach(valores => {
+      if (valores.produtoNome === produtoNome) {
+        existente = true
+      }
+    })
+    if (!existente) {
+      if (quantidade === 0) {
+        window.alert('Quantidade deve ser maior que 0')
+      } else {
+        const dados = {
+          produtoNome,
+          produto,
+          dimensoes,
+          detalhes,
+          valor,
+          quantidade,
+        }
+        this.setState((prevState) => ({
+          itens: [...prevState.itens, dados],
+        }));
+        this.setState({
+          produtoNome: '',
+          produto: 0,
+          dimensoes: 0,
+          detalhes: "",
+          valor: 0,
+          quantidade: 0,
+        });
+      }
+    } else {
+      window.alert('Produto já inserido !')
     }
-    this.setState((prevState) => ({
-      itens: [...prevState.itens, dados],
-    }));
-    this.setState({
-      produto: "",
-      dimensoes: 0,
-      fornecedor: "",
-      detalhes: "",
-      valor: 0,
-      quantidade: 0,
-    });
+  }else{
+    window.alert('Selecione um Produto !')
+  }
   }
   render() {
-    const { produtos, dimensoes, fornecedores, detalhes, valor, quantidade, itens } = this.state
+    const {clientes, produtos, dimensoes, empresas, detalhes, valor, quantidade, itens } = this.state
     const { data } = this.props
     return (
       <>
@@ -93,34 +131,55 @@ export default class Entrada extends Component {
         <fieldset id="saidaMercadoria">
           <legend>Saida de Mercadoria</legend>
           <form id="saidaEstoqueForm">
+          <label htmlFor="empresa">Empresa: </label>
+            <select name="empresa" id="empresa">
+              <option value="">Selecione uma Empresa</option>
+              {empresas ?
+                empresas.map(empresa => {
+                  return (
+                    <option key={empresa.ID_EMPRESA} value={empresa.ID_EMPRESA} onClick={(e) => { this.setState({ empresa: e.target.value }) }}>{empresa.S_NOME}</option>
+                  )
+                })
+                : ''}
+            </select><br />
+            <label htmlFor="cliente">Cliente: </label>
+            <select name="cliente" id="cliente">
+              <option value="">Selecione um Cliente</option>
+              {clientes ?
+                clientes.map(cliente => {
+                  return (
+                    <option key={cliente.ID_CLIENTE} value={cliente.ID_CLIENTE} onClick={(e) => { this.setState({ cliente: e.target.value }) }}>{cliente.S_NOME}</option>
+                  )
+                })
+                : ''}
+            </select><br />
             <label htmlFor="Produto">Produto: </label>
             <select name="Produto" id="Produto">
+              <option value="">Selecione um Produto</option>
               {produtos ?
                 produtos.map(produtos => {
                   return (
-                    <option key={produtos.ID_TIPO} value={produtos.ID_TIPO} onClick={(e) => { this.setState({ produto: e.target.value }) }}>{produtos.S_NOME}</option>
+                    <option key={produtos.ID_PRODUTO} value={produtos.ID_PRODUTO} onClick={(e) => { this.setState({ produto: e.target.value, produtoNome: produtos.S_NOME }) }}>{produtos.S_NOME}</option>
                   )
                 })
                 : ''}
             </select><br />
             <label htmlFor="Dimensoes">Dimensões: </label>
             <input type="text" name="Dimensoes" id="Dimensoes" min={0} value={dimensoes} onChange={(e) => { this.setState({ dimensoes: e.target.value }) }} />
-            <label htmlFor="Fornecedor">Fornecedor: </label>
-            <select name="Fornecedor" id="Fornecedor">
-              {fornecedores ?
-                fornecedores.map(fornecedor => {
-                  return (
-                    <option key={fornecedor.ID_FORNECEDOR} value={fornecedor.ID_FORNECEDOR} onClick={(e) => { this.setState({ fornecedor: e.target.value }) }}>{fornecedor.S_NOME}</option>
-                  )
-                })
-                : ''}
-            </select><br />
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
-            <input type="text" name="Valor" id="Valor" min={0} value={valor} onChange={(e) => { this.setState({ valor: e.target.value }) }} />
+            <input type="text" name="Valor" id="Valor" min={0} value={valor} onChange={(e) => { this.setState({ valor: e.target.value }) }} onKeyDown={(e) => {
+              if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+              }
+            }} />
             <label htmlFor="Quantidade">Quantidade: </label>
-            <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: e.target.value }) }} />
+            <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: e.target.value }) }} onKeyDown={(e) => {
+              if (!/[0-9]/.test(e.key) && 'Backspace' !== e.key && 'ArrowLeft' !== e.key && 'ArrowRight' !== e.key) {
+                e.preventDefault();
+              }
+            }} />
             <label htmlFor="Data">Data: </label>
             <p>{data}</p>
             <button type="submit" id="Enviar" onClick={
@@ -138,7 +197,6 @@ export default class Entrada extends Component {
                 <tr>
                   <th>Produto</th>
                   <th>Dimensoes</th>
-                  <th>Fornecedor</th>
                   <th>Detalhes</th>
                   <th>Valor</th>
                   <th>Quantidade</th>
@@ -150,9 +208,8 @@ export default class Entrada extends Component {
               {itens.map((valores, index) => {
                 return (
                   <tr key={index}>
-                    <td>{valores.produto}</td>
+                    <td>{valores.produtoNome}</td>
                     <td>{valores.dimensoes}</td>
-                    <td>{valores.fornecedor}</td>
                     <td>{valores.detalhes}</td>
                     <td>{valores.valor}</td>
                     <td>{valores.quantidade}</td>
@@ -165,7 +222,7 @@ export default class Entrada extends Component {
         </div>
         {
           this.state.itens[0] ?
-            <button type="submit" onClick={this.realizarEntrada}>Realizar entrada</button>
+            <button type="submit" onClick={this.realizarSaida}>Realizar saida</button>
             : ''}
 
       </>
