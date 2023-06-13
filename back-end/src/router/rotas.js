@@ -42,6 +42,7 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/consultaProduto.json", async (req, res) => {
     try {
       const produto = await entradaEstoque.consultaProduto()
+      console.log(produto)
       return res.status(200).json(produto)
     } catch (error) {
       res.status(404).json({

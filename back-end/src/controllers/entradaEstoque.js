@@ -29,7 +29,8 @@ module.exports = {
   },
   async consultaProduto() {
     const produto = await knex.raw(`
-    select * from st_produto where s_ativo = 'S'
+    select p.ID_PRODUTO, p.S_NOME, case when e.qtd is null then 0 else e.qtd end QTD
+    from vw_estoque e right join st_produto p on e.id_produto = p.id_produto
     `);
     return produto[0]
   },
