@@ -3,13 +3,13 @@ const {
 } = require('../database')
 
 module.exports = {
-  async insertProdutos(id_lote,produto, dimensoes, detalhes, valor, quantidade) {
+  async insertProdutos(id_lote, produto, dimensoes, detalhes, valor, quantidade) {
     await knex.transaction(async knex => {
       try {
         await knex.raw(`
         insert into st_produto_lote (n_quantidade,s_detalhes,s_dimensao,n_valor,id_lote,id_produto)
         values (${quantidade},'${detalhes}','${dimensoes}',${valor},${id_lote},${produto})
-        `); 
+        `);
       } catch (error) {
         console.log(error)
       }
@@ -27,14 +27,23 @@ module.exports = {
     `);
     return fornecedor[0]
   },
-  async consultaProduto() {
-    const produto = await knex.raw(`
+  async consultaProduto(id_produto) {
+    if (id_produto) {
+      const produto = await knex.raw(`
+      select p.ID_PRODUTO, p.S_NOME, case when e.qtd is null then 0 else e.qtd end QTD
+      from vw_estoque e right join st_produto p on e.id_produto = p.id_produto
+      where p.id_produto = ${id_produto}
+      `);
+      return produto[0]
+    } else {
+      const produto = await knex.raw(`
     select p.ID_PRODUTO, p.S_NOME, case when e.qtd is null then 0 else e.qtd end QTD
     from vw_estoque e right join st_produto p on e.id_produto = p.id_produto
     `);
-    return produto[0]
+      return produto[0]
+    }
   },
-  async insertLote(fornecedor){
+  async insertLote(fornecedor) {
     await knex.raw(`
     insert into st_lote (d_data_inicio,id_fornecedor)
     values

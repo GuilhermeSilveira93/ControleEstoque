@@ -17,6 +17,7 @@ export default class Saida extends Component {
       detalhes: '',
       valor: 0,
       quantidade: 0,
+      quantidadeEstoque:0,
       itens: []
     };
     this.montarTabela = this.montarTabela.bind(this)
@@ -25,14 +26,25 @@ export default class Saida extends Component {
     this.realizarSaida = this.realizarSaida.bind(this)
   }
   componentDidUpdate(prevProps,prevState){
-    if (this.state.empresa !== prevState.empresa) {
+    const {empresa,produto} = this.state
+    if (empresa !== prevState.empresa) {
       api
       .get('/consultaClientes.json',{
         params: {
-          id_empresa: this.state.empresa,
+          id_empresa: empresa,
         },
       }).then((resposta) => {
         this.setState({ clientes: resposta.data })
+      }).catch((erro) => { console.log(erro) })
+    }
+    if (produto !== prevState.produto) {
+      api
+      .get('/consultaProduto.json',{
+        params: {
+          id_produto: produto,
+        },
+      }).then((resposta) => {
+        this.setState({ quantidadeEstoque: resposta.data[0].QTD })
       }).catch((erro) => { console.log(erro) })
     }
   }
@@ -83,7 +95,7 @@ export default class Saida extends Component {
   }
   montarTabela(e) {
     e.preventDefault();
-    const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens } = this.state
+    const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens,quantidadeEstoque } = this.state
     if (produto !== 0) {
     let existente = false
     itens.forEach(valores => {
@@ -94,7 +106,9 @@ export default class Saida extends Component {
     if (!existente) {
       if (quantidade === 0) {
         window.alert('Quantidade deve ser maior que 0')
-      } else {
+      }else if (quantidade > quantidadeEstoque ) {
+        window.alert(`Não tem estoque suficiente para realizar esta Saida\nQuantidade em estoque:${quantidadeEstoque}`)
+      }else {
         const dados = {
           produtoNome,
           produto,
