@@ -7,21 +7,21 @@ export default class Estoque extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      produtos:[[],[]],
+      produtos: [[], []],
     };
   }
   componentDidMount() {
     api.get('/consultaProduto.json')
-    .then(resposta=>{
-      this.setState({produtos:resposta.data})
-    })
-    .catch(error => console.log(error))
+      .then(resposta => {
+        this.setState({ produtos: resposta.data })
+      })
+      .catch(error => console.log(error))
   };
   render() {
     const { produtos } = this.state
     const dados = []
     produtos.forEach(valores => {
-      dados.push([valores.S_NOME,valores.QTD])
+      dados.push([valores.S_NOME, valores.QTD])
     });
     console.log(dados)
     return (
@@ -34,6 +34,29 @@ export default class Estoque extends Component {
           pagination={{
             limit: 10,
           }}
+          language={{
+            search: {
+              placeholder: '🔍 Busca...'
+            },
+            pagination: {
+              previous: '⬅️',
+              next: '➡️',
+              showing: 'Mostrando',
+              results: () => 'Itens'
+            },
+          }
+          }
+          style={{
+            td: {
+              color: 'black',
+              backgroundColor: '#ccc',
+              border: '1px solid black'
+            },
+            table: {
+              'font-size': '15px'
+            }
+          }
+          }
         />
       </>
     );
