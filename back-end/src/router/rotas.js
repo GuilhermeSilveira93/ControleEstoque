@@ -5,6 +5,13 @@ const saidaEstoque = require('../controllers/saidaEstoque')
 const entradaProduto = require('../controllers/entradaProduto')
 const entradaTipo = require('../controllers/entradaTipo')
 const rotas = express.Router()
+var fs = require('fs');
+
+let date = new Date()
+    let dia = date.getDate()
+    let mes = date.getMonth() + 1
+    dia = (dia<10 ? '0' : '') + dia
+    mes = (mes<10 ? '0' : '') + mes
 
 /*API*/
 
