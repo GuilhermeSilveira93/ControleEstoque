@@ -11,7 +11,15 @@
     background-color: $background;
     color: $fonte;
   }
-
+.gridjs-currentPage{
+  padding: 0px 10px;
+}
+.gridjs-input{
+  float: right;
+  width: 100%;
+  max-width: 310px;
+  padding: 5px 5px;
+}
   main {
     margin: 0 auto;
     display: flex;
@@ -59,9 +67,10 @@
         padding: 2px;
       }
 
-      input {
+      input,select {
         width: 70%;
-        padding: 2px;
+        padding: 5px;
+        border-radius: 10px;
       }
 
       #entradaEstoque,

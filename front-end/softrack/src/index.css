@@ -14,6 +14,17 @@ body {
   color: #d9d9e3;
 }
 
+.gridjs-currentPage {
+  padding: 0px 10px;
+}
+
+.gridjs-input {
+  float: right;
+  width: 100%;
+  max-width: 310px;
+  padding: 5px 5px;
+}
+
 main {
   margin: 0 auto;
   display: flex;
@@ -58,10 +69,12 @@ main #saidaMercadoria label {
   width: 30%;
   padding: 2px;
 }
-main #entradaMercadoria input,
-main #saidaMercadoria input {
+main #entradaMercadoria input, main #entradaMercadoria select,
+main #saidaMercadoria input,
+main #saidaMercadoria select {
   width: 70%;
-  padding: 2px;
+  padding: 5px;
+  border-radius: 10px;
 }
 main #entradaMercadoria #entradaEstoque,
 main #entradaMercadoria #saidaEstoqueForm,
