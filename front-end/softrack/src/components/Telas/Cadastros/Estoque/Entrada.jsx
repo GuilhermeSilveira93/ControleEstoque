@@ -101,6 +101,7 @@ export default class Entrada extends Component {
         })
         .then(() => {
           alert('Enviado')
+          this.setState({itens:[]})
         })
         .catch((error) => alert(error));
     }
@@ -118,23 +119,23 @@ export default class Entrada extends Component {
           <legend>Entrada de Mercadoria</legend>
           <form id="entradaEstoque">
           <label htmlFor="Fornecedor">Fornecedor: </label>
-            <select name="Fornecedor" id="Fornecedor">
+            <select name="Fornecedor" id="Fornecedor" onChange={(e) => { this.setState({ fornecedor: e.target.value }) }}>
               <option value="">Selecione um Fornecedor</option>
               {fornecedores ?
                 fornecedores.map(fornecedor => {
                   return (
-                    <option key={fornecedor.ID_FORNECEDOR} value={fornecedor.ID_FORNECEDOR} onClick={(e) => { this.setState({ fornecedor: e.target.value }) }}>{fornecedor.S_NOME}</option>
+                    <option key={fornecedor.ID_FORNECEDOR} value={fornecedor.ID_FORNECEDOR}>{fornecedor.S_NOME}</option>
                   )
                 })
                 : ''}
             </select><br />
             <label htmlFor="Produto">Produto: </label>
-            <select name="Produto" id="Produto">
+            <select name="Produto" id="Produto" onChange={(e) => {this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text}) }}>
               <option value="">Selecione um Produto</option>
               {produtos ?
                 produtos.map(produtos => {
                   return (
-                    <option key={produtos.ID_PRODUTO} value={produtos.ID_PRODUTO} onClick={(e) => { this.setState({ produto: e.target.value, produtoNome: produtos.S_NOME }) }}>{produtos.S_NOME}</option>
+                    <option key={produtos.ID_PRODUTO} value={produtos.ID_PRODUTO}  >{produtos.S_NOME}</option>
                   )
                 })
                 : ''}

@@ -24,7 +24,6 @@ export default class Estoque extends Component {
     produtos.forEach(valores => {
       dados.push([valores.S_NOME, valores.QTD])
     });
-    console.log(dados)
     return (
       <>
         <Header titulo={'Estoque Atual'} />

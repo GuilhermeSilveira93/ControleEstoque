@@ -1,6 +1,9 @@
 const express = require('express')
 const entradaEstoque = require('../controllers/entradaEstoque')
+const entradaFornecedor = require('../controllers/entradaFornecedor')
 const saidaEstoque = require('../controllers/saidaEstoque')
+const entradaProduto = require('../controllers/entradaProduto')
+const entradaTipo = require('../controllers/entradaTipo')
 const rotas = express.Router()
 
 /*API*/
@@ -11,6 +14,45 @@ rotas.get("/inclusao.json", async (req, res) => {
     for (const item of req.query.itens) { //for each não aceita await.
       const { produto, dimensoes, detalhes, valor, quantidade } = item;
       insert = await entradaEstoque.insertProdutos(id_lote[0].ID_LOTE,produto,dimensoes,detalhes,valor,quantidade);
+    }
+    return res.status(200).json(insert);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+})
+.get("/inclusaoFornecedor.json", async (req, res) => {
+  try {
+    for (const item of req.query.itens) { //for each não aceita await.
+      const { novoFornecedor } = item;
+      insert = await entradaFornecedor.inserirFornecedor(novoFornecedor);
+    }
+    return res.status(200).json(insert);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+})
+.get("/inclusaoTipo.json", async (req, res) => {
+  try {
+    for (const item of req.query.itens) { //for each não aceita await.
+      const { novoTipo } = item;
+      insert = await entradaTipo.entradaTipo(novoTipo);
+    }
+    return res.status(200).json(insert);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+})
+.get("/inclusaoProduto.json", async (req, res) => {
+  try {
+    for (const item of req.query.itens) { //for each não aceita await.
+      const { novoProduto,idTipo,serial } = item;
+      insert = await entradaProduto.inserirProduto(novoProduto,idTipo,serial);
     }
     return res.status(200).json(insert);
   } catch (error) {
@@ -42,7 +84,6 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/consultaProduto.json", async (req, res) => {
     try {
       const produto = await entradaEstoque.consultaProduto(req.query.id_produto)
-      console.log(produto)
       return res.status(200).json(produto)
     } catch (error) {
       res.status(404).json({

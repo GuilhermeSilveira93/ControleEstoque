@@ -72,6 +72,7 @@ export default class Saida extends Component {
         })
         .then(() => {
           alert('Enviado')
+            this.setState({itens:[]})
         })
         .catch((error) => alert(error));
     }
@@ -146,34 +147,34 @@ export default class Saida extends Component {
           <legend>Saida de Mercadoria</legend>
           <form id="saidaEstoqueForm">
           <label htmlFor="empresa">Empresa: </label>
-            <select name="empresa" id="empresa">
+            <select name="empresa" id="empresa" onChange={(e) => { this.setState({ empresa: e.target.value }) }}>
               <option value="">Selecione uma Empresa</option>
               {empresas ?
                 empresas.map(empresa => {
                   return (
-                    <option key={empresa.ID_EMPRESA} value={empresa.ID_EMPRESA} onClick={(e) => { this.setState({ empresa: e.target.value }) }}>{empresa.S_NOME}</option>
+                    <option key={empresa.ID_EMPRESA} value={empresa.ID_EMPRESA}>{empresa.S_NOME}</option>
                   )
                 })
                 : ''}
             </select><br />
             <label htmlFor="cliente">Cliente: </label>
-            <select name="cliente" id="cliente">
+            <select name="cliente" id="cliente" onChange={(e) => { this.setState({ cliente: e.target.value }) }}>
               <option value="">Selecione um Cliente</option>
               {clientes ?
                 clientes.map(cliente => {
                   return (
-                    <option key={cliente.ID_CLIENTE} value={cliente.ID_CLIENTE} onClick={(e) => { this.setState({ cliente: e.target.value }) }}>{cliente.S_NOME}</option>
+                    <option key={cliente.ID_CLIENTE} value={cliente.ID_CLIENTE}>{cliente.S_NOME}</option>
                   )
                 })
                 : ''}
             </select><br />
             <label htmlFor="Produto">Produto: </label>
-            <select name="Produto" id="Produto">
+            <select name="Produto" id="Produto" onChange={(e) => { this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text }) }}>
               <option value="">Selecione um Produto</option>
               {produtos ?
                 produtos.map(produtos => {
                   return (
-                    <option key={produtos.ID_PRODUTO} value={produtos.ID_PRODUTO} onClick={(e) => { this.setState({ produto: e.target.value, produtoNome: produtos.S_NOME }) }}>{produtos.S_NOME}</option>
+                    <option key={produtos.ID_PRODUTO} value={produtos.ID_PRODUTO}>{produtos.S_NOME}</option>
                   )
                 })
                 : ''}
