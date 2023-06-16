@@ -7,11 +7,20 @@ const entradaTipo = require('../controllers/entradaTipo')
 const rotas = express.Router()
 var fs = require('fs');
 
+function pegarData(pagina){
 let date = new Date()
     let dia = date.getDate()
     let mes = date.getMonth() + 1
+    let ano = date.getFullYear()
     dia = (dia<10 ? '0' : '') + dia
     mes = (mes<10 ? '0' : '') + mes
+    let hora = date.getHours()
+    let minuto = date.getMinutes()
+    let segundo = date.getSeconds()
+    segundo = (segundo<10?'0':'') + segundo
+    
+    return `Log - ${pagina} - Data: ${dia}/${mes}/${ano} - ${hora}:${minuto}:${segundo}`
+}
 
 /*API*/
 
@@ -90,6 +99,7 @@ rotas.get("/inclusao.json", async (req, res) => {
   })
   .get("/consultaProduto.json", async (req, res) => {
     try {
+      console.log(pegarData('Pagina Estoque'))
       const produto = await entradaEstoque.consultaProduto(req.query.id_produto)
       return res.status(200).json(produto)
     } catch (error) {
