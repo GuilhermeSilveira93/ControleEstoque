@@ -1,15 +1,16 @@
 import React, { Component } from "react"
 import api from '../../../../api/Api';
 import Header from "../Header";
+import { NumericFormat } from 'react-number-format';
 
 export default class Saida extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      empresas:[],
-      empresa:0,
-      clientes:[],
-      cliente:0,
+      empresas: [],
+      empresa: 0,
+      clientes: [],
+      cliente: 0,
       produtos: [],
       produto: 0,
       produtoNome: '',
@@ -17,7 +18,7 @@ export default class Saida extends Component {
       detalhes: '',
       valor: 0,
       quantidade: 0,
-      quantidadeEstoque:0,
+      quantidadeEstoque: 0,
       itens: []
     };
     this.montarTabela = this.montarTabela.bind(this)
@@ -25,60 +26,63 @@ export default class Saida extends Component {
     this.cancelar = this.cancelar.bind(this)
     this.realizarSaida = this.realizarSaida.bind(this)
   }
-  componentDidUpdate(prevProps,prevState){
-    const {empresa,produto} = this.state
+  async componentDidUpdate(prevProps, prevState) {
+    const { empresa, produto } = this.state;
     if (empresa !== prevState.empresa) {
-      api
-      .get('/consultaClientes.json',{
-        params: {
-          id_empresa: empresa,
-        },
-      }).then((resposta) => {
-        this.setState({ clientes: resposta.data })
-      }).catch((erro) => { console.log(erro) })
+      try {
+        const responseClientes = await api.get('/consultaClientes.json', {
+          params: {
+            id_empresa: empresa,
+          },
+        });
+        this.setState({ clientes: responseClientes.data });
+      } catch (error) {
+        console.log(error);
+      }
     }
     if (produto !== prevState.produto) {
-      api
-      .get('/consultaProduto.json',{
-        params: {
-          id_produto: produto,
-        },
-      }).then((resposta) => {
-        this.setState({ quantidadeEstoque: resposta.data[0].QTD })
-      }).catch((erro) => { console.log(erro) })
+      try {
+        const responseProduto = await api.get('/consultaProduto.json', {
+          params: {
+            id_produto: produto,
+          },
+        });
+        this.setState({ quantidadeEstoque: responseProduto.data[0].QTD });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
-  componentDidMount() {
-    api
-      .get('/consultaEmpresa.json').then((resposta) => {
-        this.setState({ empresas: resposta.data })
-      }).catch((erro) => { console.log(erro) })
-    api
-      .get('/consultaProduto.json').then((resposta) => {
-        this.setState({ produtos: resposta.data })
-      }).catch((erro) => { console.log(erro) })
+  async componentDidMount() {
+    try {
+      const responseEmpresas = await api.get('/consultaEmpresa.json');
+      const responseProdutos = await api.get('/consultaProduto.json');
+      this.setState({ empresas: responseEmpresas.data, produtos: responseProdutos.data });
+    } catch (error) {
+      console.log(error);
+    }
   }
   realizarSaida(e) {
     e.preventDefault();
     if (this.state.cliente !== 0) {
-    const confirmacao = window.confirm(`Confirma a SAIDA dos itens?`)
-    if (confirmacao) {
-      api
-        .get('saida.json', {
-          params: {
-            cliente: this.state.cliente,
-            itens: this.state.itens
-          },
-        })
-        .then(() => {
-          alert('Enviado')
-            this.setState({itens:[]})
-        })
-        .catch((error) => alert(error));
+      const confirmacao = window.confirm(`Confirma a SAIDA dos itens?`)
+      if (confirmacao) {
+        api
+          .get('saida.json', {
+            params: {
+              cliente: this.state.cliente,
+              itens: this.state.itens
+            },
+          })
+          .then(() => {
+            alert('Enviado')
+            this.setState({ itens: [] })
+          })
+          .catch((error) => alert(error));
+      }
+    } else {
+      window.alert('Selecione um Cliente')
     }
-  }else{
-    window.alert('Selecione um Cliente')
-  }
   };
   excluirItem(index) {
     const { itens } = this.state
@@ -96,49 +100,49 @@ export default class Saida extends Component {
   }
   montarTabela(e) {
     e.preventDefault();
-    const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens,quantidadeEstoque } = this.state
+    const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens, quantidadeEstoque } = this.state
     if (produto !== 0) {
-    let existente = false
-    itens.forEach(valores => {
-      if (valores.produtoNome === produtoNome) {
-        existente = true
-      }
-    })
-    if (!existente) {
-      if (quantidade === 0) {
-        window.alert('Quantidade deve ser maior que 0')
-      }else if (quantidade > quantidadeEstoque ) {
-        window.alert(`Não tem estoque suficiente para realizar esta Saida\nQuantidade em estoque:${quantidadeEstoque}`)
-      }else {
-        const dados = {
-          produtoNome,
-          produto,
-          dimensoes,
-          detalhes,
-          valor,
-          quantidade,
+      let existente = false
+      itens.forEach(valores => {
+        if (valores.produtoNome === produtoNome) {
+          existente = true
         }
-        this.setState((prevState) => ({
-          itens: [...prevState.itens, dados],
-        }));
-        this.setState({
-          produtoNome: '',
-          produto: 0,
-          dimensoes: 0,
-          detalhes: "",
-          valor: 0,
-          quantidade: 0,
-        });
+      })
+      if (!existente) {
+        if (quantidade === 0) {
+          window.alert('Quantidade deve ser maior que 0')
+        } else if (quantidade > quantidadeEstoque) {
+          window.alert(`Não tem estoque suficiente para realizar esta Saida\nQuantidade em estoque:${quantidadeEstoque}`)
+        } else {
+          const dados = {
+            produtoNome,
+            produto,
+            dimensoes,
+            detalhes,
+            valor,
+            quantidade,
+          }
+          this.setState((prevState) => ({
+            itens: [...prevState.itens, dados],
+          }));
+          this.setState({
+            produtoNome: '',
+            produto: 0,
+            dimensoes: 0,
+            detalhes: "",
+            valor: 0,
+            quantidade: 0,
+          });
+        }
+      } else {
+        window.alert('Produto já inserido !')
       }
     } else {
-      window.alert('Produto já inserido !')
+      window.alert('Selecione um Produto !')
     }
-  }else{
-    window.alert('Selecione um Produto !')
-  }
   }
   render() {
-    const {clientes, produtos, dimensoes, empresas, detalhes, valor, quantidade, itens } = this.state
+    const { clientes, produtos, dimensoes, empresas, detalhes, valor, quantidade, itens } = this.state
     const { data } = this.props
     return (
       <>
@@ -146,7 +150,7 @@ export default class Saida extends Component {
         <fieldset id="saidaMercadoria">
           <legend>Saida de Mercadoria</legend>
           <form id="saidaEstoqueForm">
-          <label htmlFor="empresa">Empresa: </label>
+            <label htmlFor="empresa">Empresa: </label>
             <select name="empresa" id="empresa" onChange={(e) => { this.setState({ empresa: e.target.value }) }}>
               <option value="">Selecione uma Empresa</option>
               {empresas ?
@@ -184,11 +188,15 @@ export default class Saida extends Component {
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
-            <input type="text" name="Valor" id="Valor" min={0} value={valor} onChange={(e) => { this.setState({ valor: e.target.value }) }} onKeyDown={(e) => {
-              if (!/[0-9]/.test(e.key)) {
-                e.preventDefault();
-              }
-            }} />
+            <NumericFormat
+              value={valor}
+              onChange={(e) => this.setState({ valor: e.target.value })}
+              thousandSeparator={true}
+              prefix={'R$'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+            <br />
             <label htmlFor="Quantidade">Quantidade: </label>
             <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: e.target.value }) }} onKeyDown={(e) => {
               if (!/[0-9]/.test(e.key) && 'Backspace' !== e.key && 'ArrowLeft' !== e.key && 'ArrowRight' !== e.key) {

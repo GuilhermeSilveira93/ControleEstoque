@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import api from '../../../../api/Api';
 import Header from "../Header";
+import { NumericFormat } from 'react-number-format';
 
 export default class Entrada extends Component {
   constructor(props) {
@@ -145,11 +146,15 @@ export default class Entrada extends Component {
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
-            <input type="text" name="Valor" id="Valor" min={0} value={valor} onChange={(e) => { this.setState({ valor: e.target.value }) }} onKeyDown={(e) => {
-              if (!/[0-9]/.test(e.key)) {
-                e.preventDefault();
-              }
-            }} />
+            <NumericFormat
+              value={valor}
+              onChange={(e) => this.setState({ valor: e.target.value })}
+              thousandSeparator={true}
+              prefix={'R$'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
+            <br />
             <label htmlFor="Quantidade">Quantidade: </label>
             <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: e.target.value }) }} onKeyDown={(e) => {
               if (!/[0-9]/.test(e.key) && 'Backspace' !== e.key && 'ArrowLeft' !== e.key && 'ArrowRight' !== e.key) {
