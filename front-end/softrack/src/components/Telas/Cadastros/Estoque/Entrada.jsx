@@ -146,13 +146,8 @@ export default class Entrada extends Component {
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
-            <NumericFormat
-              value={valor}
-              onChange={(e) => this.setState({ valor: e.target.value })}
-              thousandSeparator={true}
-              prefix={'R$'}
-              decimalScale={2}
-              fixedDecimalScale={true}
+            <NumericFormat value={null} onChange={(e) => this.setState({ valor: e.target.value })}
+              thousandSeparator={true} prefix={'R$'} decimalScale={2} fixedDecimalScale={true}
             />
             <br />
             <label htmlFor="Quantidade">Quantidade: </label>
