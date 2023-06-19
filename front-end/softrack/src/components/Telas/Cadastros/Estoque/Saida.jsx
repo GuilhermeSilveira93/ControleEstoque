@@ -189,7 +189,7 @@ export default class Saida extends Component {
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
             <NumericFormat
-              value={valor}
+              value={null}
               onChange={(e) => this.setState({ valor: e.target.value })}
               thousandSeparator={true}
               prefix={'R$'}
