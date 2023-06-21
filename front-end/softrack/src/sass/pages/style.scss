@@ -11,8 +11,13 @@
     background-color: $background;
     color: $fonte;
   }
-.gridjs-currentPage{
+.gridjs-pages{
+  .gridjs-currentPage{
+    box-shadow: 0px 0px 15px #008cff;
+  }
+  button{
   padding: 0px 10px;
+}
 }
 .gridjs-input{
   float: right;

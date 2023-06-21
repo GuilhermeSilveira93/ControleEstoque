@@ -14,7 +14,10 @@ body {
   color: #d9d9e3;
 }
 
-.gridjs-currentPage {
+.gridjs-pages .gridjs-currentPage {
+  box-shadow: 0px 0px 15px #008cff;
+}
+.gridjs-pages button {
   padding: 0px 10px;
 }
 

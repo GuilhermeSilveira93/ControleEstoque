@@ -50,6 +50,7 @@ export default class Entrada extends Component {
   montarTabela(e) {
     e.preventDefault();
     const { produtoNome, produto, dimensoes, detalhes, valor, quantidade, itens } = this.state
+    console.log(valor)
     if (produto !== 0) {
     let existente = false
     itens.forEach(valores => {

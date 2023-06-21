@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Grid } from 'gridjs-react';
+import { Grid,_} from 'gridjs-react';
 import api from '../../../../api/Api';
 import { ptBR } from "gridjs/l10n";
 import Header from "../Header";
@@ -28,9 +28,12 @@ export default class Estoque extends Component {
       <>
         <Header titulo={'Estoque Atual'} />
         <Grid
+        
           data={dados}
 
-          columns={['Produto', 'Quantidade']}
+          columns={
+            ['Produto','Quantidade']
+          }
           search={true}
           pagination={{
             limit: 10,
@@ -42,8 +45,8 @@ export default class Estoque extends Component {
               placeholder: '🔍 Busca...'
             },
             pagination: {
-              previous: '⬅️',
-              next: '➡️',
+              previous: '<<',
+              next: '>>',
               showing: 'Mostrando',
               results: () => 'Itens'
             },
