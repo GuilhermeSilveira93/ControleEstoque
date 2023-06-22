@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Grid,_} from 'gridjs-react';
+import { Grid} from 'gridjs-react';
 import api from '../../../../api/Api';
 import { ptBR } from "gridjs/l10n";
 import Header from "../Header";
