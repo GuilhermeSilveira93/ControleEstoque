@@ -83,8 +83,8 @@ export default class Main extends Component {
     return (
       <>
         <main>
-          <Aside showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada}
-          showFornecedor={this.showFornecedor} showProduto={this.showProduto} showTipo={this.showTipo}/>
+          <Aside showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada} logout={this.props.logout}
+          showFornecedor={this.showFornecedor} showProduto={this.showProduto} showTipo={this.showTipo} UserName={this.props.UserName}/>
           <Conteudo entrada={entrada} saida={saida} estoque={estoque} fornecedor={fornecedor} produto={produto} tipo={tipo} />
         </main>
       </>

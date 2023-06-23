@@ -6,23 +6,35 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    login:false,
-    usuario:'',
+      usuarioSessao: [],
     };
+    this.logout = this.logout.bind(this)
     this.logado = this.logado.bind(this)
   }
-logado(){
-  this.setState({usuario:sessionStorage.getItem('Usuario'),login:true})
-  console.log(sessionStorage.getItem('Usuario'))
-}
-  
+  componentDidMount() {
+    if (sessionStorage.getItem('Usuario') && sessionStorage.getItem('Usuario').indexOf('s_nome') > 0) {
+      this.setState({
+        usuarioSessao: JSON.parse(sessionStorage.getItem('Usuario')),
+      });
+    }
+  }
+  logado(userJson){
+    this.setState({usuarioSessao:userJson})
+  }
+  logout() {
+    sessionStorage.removeItem('Usuario');
+    this.setState({
+      usuarioSessao: '',
+    });
+  }
+
   render() {
-    const {login} = this.state
-    return (
-      <>
-      {login ? <Main /> :
-      <Login logado={this.logado} />}
-      </>
-      )
+    const { mensagem, usuarioSessao } = this.state
+    console.log(usuarioSessao?.['s_nome'])
+    return usuarioSessao && usuarioSessao['s_nome'] ? (
+      <Main UserName={usuarioSessao?.['s_nome']} logout={this.logout} />
+    ) : (
+      <Login mensagem={mensagem} logado={this.logado}/>
+    );
   }
 }

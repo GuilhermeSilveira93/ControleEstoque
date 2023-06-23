@@ -157,8 +157,6 @@ rotas.get("/inclusao.json", async (req, res) => {
   })
   .get("/login.json", async (req, res) => {
     const {email,senha} = req.query
-    console.log('email' + email)
-    console.log('senha' + senha)
     try {
       const validacao = await login.validacao(email,senha)
       return res.status(200).json(validacao)

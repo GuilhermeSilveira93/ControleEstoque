@@ -10,7 +10,7 @@ class Aside extends Component {
     return (
       <aside>
         <div>
-          <h3>Olá, Produção !</h3><br />
+          <h2><u>Olá, {this.props.UserName} !</u></h2><br />
         </div>
         <nav>
           <ul>
@@ -25,6 +25,7 @@ class Aside extends Component {
             <li onClick={() => showTipo()} style={{ cursor: 'pointer' }}><h1><BsFillBoxFill color={"white"} size={IconSize} /> Tipo</h1></li>
           </ul>
         </nav>
+        <button type="button" onClick={()=>this.props.logout()}>SAIR</button>
       </aside>
     );
   }
