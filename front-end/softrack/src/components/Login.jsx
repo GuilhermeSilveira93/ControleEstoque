@@ -13,7 +13,10 @@ export default class Login extends Component {
     }
     this.validacao = this.validacao.bind(this)
   }
-  async validacao() {    
+  async validacao() {
+    const chave = await bcrypt.genSalt(10)
+    const senhanova = await bcrypt.hash('123456',chave)
+    console.log(`chave: ${chave} --- senha: ${senhanova}`)
     const { email, senha } = this.state
     try {
       const chave = await api.get('/chave.json', {
