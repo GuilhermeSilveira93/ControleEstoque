@@ -69,15 +69,15 @@ export default class Produto extends Component {
           novoProduto: '',
           idTipo:0,
           serial:''
-        });
+        }/*,()=>{document.getElementById()}*/);
       } else {
-        window.alert('Selecione o tipo do Produto')
+        window.alert('Produto já inserido ou cadastrado no sistema!')
       }
     }else{
-      alert('Produto já inserido ou cadastrado no sistema!')
+      alert('Selecione o tipo do Produto')
     }
     } else {
-      window.alert('Digite o nome de um Fornecedor !')
+      window.alert('Digite o nome de um Produto !')
     }
 
 
@@ -100,7 +100,7 @@ export default class Produto extends Component {
     }
   };
   render() {
-    const { itens, novoProduto, tipos,serial } = this.state
+    const { itens, novoProduto, tipos,serial,idTipo } = this.state
     const { data } = this.props
     return (
       <>
@@ -115,7 +115,7 @@ export default class Produto extends Component {
             <input type="text" name="Serial" id="Serial" min={0} value={serial} onChange={(e) => { this.setState({ serial: e.target.value }) }} />
             <br />
             <label htmlFor="Tipo">Tipo: </label>
-            <select name="Tipo" id="Tipo" onChange={(e) => { this.setState({ idTipo: e.target.value }) }}>
+            <select name="Tipo" id="Tipo" value={idTipo} onChange={(e) => { this.setState({ idTipo: e.target.value }) }}>
               <option value="">Selecione o Tipo do Produto</option>
               {tipos ?
                 tipos.map(tipo => {
@@ -141,6 +141,7 @@ export default class Produto extends Component {
               <thead>
                 <tr>
                   <th>Produto</th>
+                  <th>Serial</th>
                   <th>Apagar</th>
                 </tr>
               </thead>
