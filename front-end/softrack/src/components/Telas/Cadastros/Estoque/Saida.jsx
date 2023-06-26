@@ -47,7 +47,7 @@ export default class Saida extends Component {
             id_produto: produto,
           },
         });
-        this.setState({ quantidadeEstoque: responseProduto.data[0].QTD });
+        this.setState({ quantidadeEstoque: responseProduto.data[0]?.QTD });
       } catch (error) {
         console.log(error);
       }
@@ -109,6 +109,7 @@ export default class Saida extends Component {
         }
       })
       if (!existente) {
+        console.log(quantidade)
         if (quantidade === 0) {
           window.alert('Quantidade deve ser maior que 0')
         } else if (quantidade > quantidadeEstoque) {
@@ -142,7 +143,7 @@ export default class Saida extends Component {
     }
   }
   render() {
-    const { clientes, produtos, dimensoes, empresas, detalhes, valor, quantidade, itens } = this.state
+    const { clientes, produtos, dimensoes, empresas, detalhes, valor, quantidade, itens, produto,empresa,cliente } = this.state
     const { data } = this.props
     return (
       <>
@@ -151,7 +152,7 @@ export default class Saida extends Component {
           <legend>Saida de Mercadoria</legend>
           <form id="saidaEstoqueForm">
             <label htmlFor="empresa">Empresa: </label>
-            <select name="empresa" id="empresa" onChange={(e) => { this.setState({ empresa: e.target.value }) }}>
+            <select name="empresa" value={empresa} id="empresa" onChange={(e) => { this.setState({ empresa: e.target.value }) }}>
               <option value="">Selecione uma Empresa</option>
               {empresas ?
                 empresas.map(empresa => {
@@ -162,7 +163,7 @@ export default class Saida extends Component {
                 : ''}
             </select><br />
             <label htmlFor="cliente">Cliente: </label>
-            <select name="cliente" id="cliente" onChange={(e) => { this.setState({ cliente: e.target.value }) }}>
+            <select name="cliente" id="cliente" value={cliente} onChange={(e) => { this.setState({ cliente: e.target.value }) }}>
               <option value="">Selecione um Cliente</option>
               {clientes ?
                 clientes.map(cliente => {
@@ -173,7 +174,7 @@ export default class Saida extends Component {
                 : ''}
             </select><br />
             <label htmlFor="Produto">Produto: </label>
-            <select name="Produto" id="Produto" onChange={(e) => { this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text }) }}>
+            <select name="Produto" id="Produto" value={produto} onChange={(e) => { this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text }) }}>
               <option value="">Selecione um Produto</option>
               {produtos ?
                 produtos.map(produtos => {
@@ -189,7 +190,7 @@ export default class Saida extends Component {
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
             <NumericFormat
-              value={null}
+              value={valor}
               onChange={(e) => this.setState({ valor: e.target.value })}
               thousandSeparator={true}
               prefix={'R$'}
@@ -198,7 +199,7 @@ export default class Saida extends Component {
             />
             <br />
             <label htmlFor="Quantidade">Quantidade: </label>
-            <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: e.target.value }) }} onKeyDown={(e) => {
+            <input type="text" name="Quantidade" id="Quantidade" min={0} value={quantidade} onChange={(e) => { this.setState({ quantidade: Number(e.target.value) }) }} onKeyDown={(e) => {
               if (!/[0-9]/.test(e.key) && 'Backspace' !== e.key && 'ArrowLeft' !== e.key && 'ArrowRight' !== e.key) {
                 e.preventDefault();
               }

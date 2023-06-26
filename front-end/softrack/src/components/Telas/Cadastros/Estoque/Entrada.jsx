@@ -112,7 +112,7 @@ export default class Entrada extends Component {
   }
   };
   render() {
-    const { produtos, dimensoes, fornecedores, detalhes, valor, quantidade, itens } = this.state
+    const { produtos, dimensoes, fornecedores, detalhes, valor, quantidade, itens,produto,fornecedor } = this.state
     const { data } = this.props
     return (
       <>
@@ -121,7 +121,7 @@ export default class Entrada extends Component {
           <legend>Entrada de Mercadoria</legend>
           <form id="entradaEstoque">
           <label htmlFor="Fornecedor">Fornecedor: </label>
-            <select name="Fornecedor" id="Fornecedor" onChange={(e) => { this.setState({ fornecedor: e.target.value }) }}>
+            <select name="Fornecedor" value={fornecedor} id="Fornecedor" onChange={(e) => { this.setState({ fornecedor: e.target.value }) }}>
               <option value="">Selecione um Fornecedor</option>
               {fornecedores ?
                 fornecedores.map(fornecedor => {
@@ -132,7 +132,7 @@ export default class Entrada extends Component {
                 : ''}
             </select><br />
             <label htmlFor="Produto">Produto: </label>
-            <select name="Produto" id="Produto" onChange={(e) => {this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text}) }}>
+            <select name="Produto" id="Produto" value={produto} onChange={(e) => {this.setState({ produto: e.target.value, produtoNome: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text}) }}>
               <option value="">Selecione um Produto</option>
               {produtos ?
                 produtos.map(produtos => {
@@ -147,7 +147,7 @@ export default class Entrada extends Component {
             <label htmlFor="Detalhes">Detalhes: </label>
             <input type="text" name="Detalhes" id="Detalhes" min={0} value={detalhes} onChange={(e) => { this.setState({ detalhes: e.target.value }) }} />
             <label htmlFor="Valor">Valor: </label>
-            <NumericFormat value={null} onChange={(e) => this.setState({ valor: e.target.value })}
+            <NumericFormat value={valor} onChange={(e) => this.setState({ valor: e.target.value })}
               thousandSeparator={true} prefix={'R$'} decimalScale={2} fixedDecimalScale={true}
             />
             <br />
