@@ -4,7 +4,7 @@ const entradaFornecedor = require('../controllers/entradaFornecedor')
 const saidaEstoque = require('../controllers/saidaEstoque')
 const entradaProduto = require('../controllers/entradaProduto')
 const entradaTipo = require('../controllers/entradaTipo')
-const login = require('../controllers/login')
+const st_usuario = require('../controllers/st_usuario')
 const rotas = express.Router()
 var fs = require('fs');
 
@@ -147,7 +147,7 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/chave.json", async (req, res) => {
     const email = req.query.email
     try {
-      const chave = await login.chave(email)
+      const chave = await st_usuario.chave(email)
       return res.status(200).json(chave)
     } catch (error) {
       res.status(404).json({
@@ -158,7 +158,7 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/login.json", async (req, res) => {
     const {email,senha} = req.query
     try {
-      const validacao = await login.validacao(email,senha)
+      const validacao = await st_usuario.validacao(email,senha)
       return res.status(200).json(validacao)
     } catch (error) {
       res.status(404).json({

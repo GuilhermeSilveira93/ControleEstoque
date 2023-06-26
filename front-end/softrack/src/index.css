@@ -14,44 +14,6 @@ body {
   color: #d9d9e3;
 }
 
-#FormularioLogin {
-  background-color: #ccc;
-  color: black;
-  width: 300px;
-  height: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
-  padding: 20px;
-}
-#FormularioLogin form {
-  width: 100%;
-  position: relative;
-  top: 35%;
-  left: 50%;
-  text-align: center;
-  transform: translate(-50%, -50%);
-}
-#FormularioLogin form h1 {
-  margin-bottom: 40px;
-}
-#FormularioLogin form input {
-  width: 100%;
-  border-radius: 20px;
-  padding: 5px;
-}
-#FormularioLogin form label {
-  font-size: 14pt;
-  width: 50px;
-}
-#FormularioLogin form button {
-  position: relative;
-  bottom: -50px;
-  padding: 5px 20px;
-}
-
 .gridjs-pages .gridjs-currentPage {
   box-shadow: 0px 0px 15px #008cff;
 }
@@ -64,6 +26,52 @@ body {
   width: 100%;
   max-width: 310px;
   padding: 5px 5px;
+}
+
+.loginflex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.loginflex .imgsidelogin {
+  width: 60%;
+  height: 100vh;
+  background-image: url("images/login.jpeg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.loginflex #FormularioLogin {
+  display: flex;
+  background-color: #ccc;
+  color: black;
+  width: 30%;
+  margin-right: 10%;
+  border-radius: 20px;
+  padding: 50px 50px 100px 50px;
+  box-shadow: 0px 10px 25px black;
+}
+.loginflex #FormularioLogin form {
+  width: 100%;
+  text-align: center;
+}
+.loginflex #FormularioLogin form h1 {
+  margin-bottom: 40px;
+}
+.loginflex #FormularioLogin form input {
+  width: 100%;
+  border-radius: 20px;
+  padding: 5px;
+  margin-bottom: 50px;
+}
+.loginflex #FormularioLogin form label {
+  font-size: 14pt;
+  width: 50px;
+}
+.loginflex #FormularioLogin form button {
+  bottom: -50px;
+  border-radius: 10px;
+  padding: 5px 50px;
 }
 
 main {
