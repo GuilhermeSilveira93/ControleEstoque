@@ -166,6 +166,17 @@ rotas.get("/inclusao.json", async (req, res) => {
       })
     }
   })
+  .get("/permicoes.json", async (req, res) => {
+    const {idGrupo} = req.query
+    try {
+      const permicoes = await st_usuario.permicoes(idGrupo)
+      return res.status(200).json(permicoes)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
   
 /*API*/
 

@@ -12,13 +12,25 @@ module.exports = {
   },
   async validacao(email,senha) {
     try {
-      const chave = await knex.raw(`
+      const login = await knex.raw(`
       select * from st_usuario where s_email = '${email}'
       and s_senha = '${senha}'
       `);
-      return chave[0]
+      return login[0]
     } catch (error) {
       console.log(error)
     }
 },
+  async permicoes(idGrupo){
+    try {
+      const grupo = await knex.raw(`
+      select PAGINA,LISTAR,INCLUIR,EDITAR,EXCLUIR,ATRIBUIR
+      from vw_item_menu
+      where idgrupo = ${idGrupo}
+      `)
+      return grupo[0]
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

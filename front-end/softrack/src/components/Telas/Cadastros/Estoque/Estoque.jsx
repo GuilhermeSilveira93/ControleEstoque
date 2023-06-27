@@ -36,7 +36,7 @@ export default class Estoque extends Component {
           }
           search={true}
           pagination={{
-            limit: 10,
+            limit: 15,
           }}
           
           language={{

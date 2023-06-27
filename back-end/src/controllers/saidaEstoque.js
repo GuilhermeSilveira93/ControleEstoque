@@ -18,12 +18,14 @@ module.exports = {
   async consultaEmpresa() {
     const empresa = await knex.raw(`
     select * from st_empresa where s_ativo = 'S'
+    order by s_nome
     `);
     return empresa[0]
   },
   async consultaClientes(id_empresa) {
     const clientes = await knex.raw(`
     select * from st_cliente where id_empresa = ${id_empresa}
+    order by s_nome
     `);
     return clientes[0]
   },

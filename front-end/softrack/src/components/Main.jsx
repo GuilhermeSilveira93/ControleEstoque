@@ -80,10 +80,11 @@ export default class Main extends Component {
   }
   render() {
     const { entrada, saida, estoque,fornecedor,produto,tipo } = this.state
+    const {direitos} = this.props
     return (
       <>
         <main>
-          <Aside showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada} logout={this.props.logout}
+          <Aside direitos={direitos} showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada} logout={this.props.logout}
           showFornecedor={this.showFornecedor} showProduto={this.showProduto} showTipo={this.showTipo} UserName={this.props.UserName}/>
           <Conteudo entrada={entrada} saida={saida} estoque={estoque} fornecedor={fornecedor} produto={produto} tipo={tipo} />
         </main>
