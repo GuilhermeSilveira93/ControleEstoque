@@ -109,7 +109,6 @@ export default class Saida extends Component {
         }
       })
       if (!existente) {
-        console.log(quantidade)
         if (quantidade === 0) {
           window.alert('Quantidade deve ser maior que 0')
         } else if (quantidade > quantidadeEstoque) {

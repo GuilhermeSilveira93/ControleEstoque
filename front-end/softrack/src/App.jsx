@@ -21,18 +21,14 @@ export default class App extends Component {
     }
   }
   async componentDidUpdate() {
-    const { usuarioSessao,direitosUsuario } = this.state
+    const { usuarioSessao, direitosUsuario } = this.state
     if (usuarioSessao && usuarioSessao['s_nome'] && direitosUsuario && direitosUsuario.length === 0) {
-      await api.get('/permicoes.json', {
-        params: {
-          idGrupo: usuarioSessao['id_grupo'],
-        }
-      }).then((resposta) => {
-        this.setState({ direitosUsuario: resposta.data })
-        console.log(direitosUsuario)
-      }).catch((err) => {
-        console.log(err)
-      });
+      try {
+        const permicoes = await api.get('/permicoes.json', { params: { idGrupo: usuarioSessao['id_grupo'] } })
+        this.setState({ direitosUsuario: permicoes.data })
+      } catch (error){
+        console.log(error)
+      }
     }
   }
   logado(userJson) {
@@ -42,12 +38,12 @@ export default class App extends Component {
     sessionStorage.removeItem('Usuario');
     this.setState({
       usuarioSessao: '',
-      direitosUsuario:[],
+      direitosUsuario: [],
     });
   }
 
   render() {
-    const { mensagem, usuarioSessao,direitosUsuario } = this.state
+    const { mensagem, usuarioSessao, direitosUsuario } = this.state
     return usuarioSessao && usuarioSessao['s_nome'] ? (
       <Main UserName={usuarioSessao?.['s_nome']} logout={this.logout} direitos={direitosUsuario} />
     ) : (

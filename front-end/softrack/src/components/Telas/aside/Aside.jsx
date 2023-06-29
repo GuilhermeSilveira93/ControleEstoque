@@ -3,6 +3,7 @@ import { MdAddCircle } from "react-icons/md";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { BsBookFill,BsFillBoxFill } from "react-icons/bs";
 import { FaPeopleCarry,FaProductHunt } from "react-icons/fa";
+import logoProd from '../../../images/logo_prod_branco.png'
 class Aside extends Component {
   constructor(props){
     super(props)
@@ -14,7 +15,6 @@ class Aside extends Component {
   temDireito(nomePagina,operacao){
     const {direitos} = this.props
     let temDireito = false
-    console.log(direitos)
     direitos.forEach(direito => {
       if (direito['pagina'] === nomePagina) {
         temDireito = direito[operacao] === 'X'
@@ -28,6 +28,7 @@ class Aside extends Component {
     return (
       <aside>
         <div>
+        <h1><img src={logoProd} alt="Logo Softrack" title='Softrack' style={{width:'100%'}}/></h1>
           <h2><u>Olá, {this.props.UserName} !</u></h2><br />
         </div>
         <nav>
@@ -37,7 +38,7 @@ class Aside extends Component {
             {this.temDireito('entrada','Listar') ? <li onClick={() => showEntrada()} style={{ cursor: 'pointer' }}><h3><MdAddCircle color={"white"} size={IconSize}/> Entrada</h3></li>:''}
             {this.temDireito('saida','Listar') ? <li onClick={() => showSaida()} style={{ cursor: 'pointer' }}><h3><AiFillMinusCircle color={'white'} size={IconSize}/> Saida</h3></li> :''}
             <hr />
-            <h2>Cadastro</h2>
+            {this.temDireito('fornecedor','Listar') || this.temDireito('produto','Listar') || this.temDireito('tipo','Listar') ? <h2>Cadastro</h2> :''}
             {this.temDireito('fornecedor','Listar') ? <li onClick={() => showFornecedor()} style={{ cursor: 'pointer' }}><h1><FaPeopleCarry color={"white"} size={IconSize} /> Fornecedor</h1></li>:''}
             {this.temDireito('produto','Listar') ? <li onClick={() => showProduto()} style={{ cursor: 'pointer' }}><h1><FaProductHunt color={"white"} size={IconSize} /> Produto</h1></li>:''}
             {this.temDireito('tipo','Listar') ? <li onClick={() => showTipo()} style={{ cursor: 'pointer' }}><h1><BsFillBoxFill color={"white"} size={IconSize} /> Tipo</h1></li>:''}

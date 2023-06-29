@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import api from '../api/Api';
 import bcrypt from 'bcryptjs'
+import logoProd from '../images/logo_prod.png'
 
 
 export default class Login extends Component {
@@ -15,6 +16,9 @@ export default class Login extends Component {
   }
   async validacao() {
     const { email, senha } = this.state
+    const chave = await bcrypt.genSalt(10)
+    const password = await bcrypt.hash('123456',chave)
+    console.log(`senha : ${password} chave: ${chave}`)
     try {
       const chave = await api.get('/chave.json', {
         params: {
@@ -52,7 +56,7 @@ export default class Login extends Component {
         <div className="imgsidelogin"></div>
         <div id='FormularioLogin'>
           <form>
-            <h1>Estoque SFTK</h1>
+            <h1><img src={logoProd} alt="Logo Softrack" title='Softrack' style={{width:'100%'}}/></h1>
             <label htmlFor="email">E-mail: </label>
             <input type="text" onChange={(e) => this.setState({ email: e.target.value })} />
             <br />

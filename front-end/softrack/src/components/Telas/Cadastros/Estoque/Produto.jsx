@@ -69,7 +69,7 @@ export default class Produto extends Component {
           novoProduto: '',
           idTipo:0,
           serial:''
-        }/*,()=>{document.getElementById()}*/);
+        });
       } else {
         window.alert('Produto já inserido ou cadastrado no sistema!')
       }
