@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle, MdDashboard } from "react-icons/md";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { BsBookFill,BsFillBoxFill } from "react-icons/bs";
 import { FaPeopleCarry,FaProductHunt } from "react-icons/fa";
@@ -24,7 +24,7 @@ class Aside extends Component {
   }
   render() {
     const IconSize = 15
-    const { showEntrada, showSaida, showEstoque,showFornecedor, showProduto,showTipo} = this.props;
+    const { showEntrada, showSaida, showEstoque,showFornecedor, showProduto,showTipo,showDash} = this.props;
     return (
       <aside>
         <div>
@@ -34,6 +34,7 @@ class Aside extends Component {
         <nav>
           <ul>
             <h2>Estoque</h2>
+            <li onClick={() => showDash()} style={{ cursor: 'pointer' }}><h1><MdDashboard color={"white"} size={IconSize} /> DashBoard</h1></li>
             {this.temDireito('estoque','Listar') ? <li onClick={() => showEstoque()} style={{ cursor: 'pointer' }}><h1><BsBookFill color={"white"} size={IconSize} /> Estoque</h1></li> : ''}
             {this.temDireito('entrada','Listar') ? <li onClick={() => showEntrada()} style={{ cursor: 'pointer' }}><h3><MdAddCircle color={"white"} size={IconSize}/> Entrada</h3></li>:''}
             {this.temDireito('saida','Listar') ? <li onClick={() => showSaida()} style={{ cursor: 'pointer' }}><h3><AiFillMinusCircle color={'white'} size={IconSize}/> Saida</h3></li> :''}

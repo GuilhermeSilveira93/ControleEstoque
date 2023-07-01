@@ -5,6 +5,7 @@ const saidaEstoque = require('../controllers/saidaEstoque')
 const entradaProduto = require('../controllers/entradaProduto')
 const entradaTipo = require('../controllers/entradaTipo')
 const st_usuario = require('../controllers/st_usuario')
+const graficos = require('../controllers/graficos')
 const rotas = express.Router()
 var fs = require('fs');
 
@@ -171,6 +172,48 @@ rotas.get("/inclusao.json", async (req, res) => {
     try {
       const permicoes = await st_usuario.permicoes(idGrupo)
       return res.status(200).json(permicoes)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/saidaBar.json", async (req, res) => {
+    try {
+      const saidaBar = await graficos.SaidaBar()
+      return res.status(200).json(saidaBar)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/entradaBar.json", async (req, res) => {
+    try {
+      const entradaBar = await graficos.EntradaBar()
+      return res.status(200).json(entradaBar)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/saidaPie.json", async (req, res) => {
+    try {
+      const saidaPie = await graficos.SaidaPie()
+      console.log(saidaPie)
+      return res.status(200).json(saidaPie)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/entradaPie.json", async (req, res) => {
+    try {
+      const entradaPie = await graficos.EntradaPie()
+      console.log(entradaPie)
+      return res.status(200).json(entradaPie)
     } catch (error) {
       res.status(404).json({
         message: error.message
