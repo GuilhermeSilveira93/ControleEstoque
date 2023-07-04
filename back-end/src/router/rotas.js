@@ -201,7 +201,6 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/saidaPie.json", async (req, res) => {
     try {
       const saidaPie = await graficos.SaidaPie()
-      console.log(saidaPie)
       return res.status(200).json(saidaPie)
     } catch (error) {
       res.status(404).json({
@@ -212,7 +211,6 @@ rotas.get("/inclusao.json", async (req, res) => {
   .get("/entradaPie.json", async (req, res) => {
     try {
       const entradaPie = await graficos.EntradaPie()
-      console.log(entradaPie)
       return res.status(200).json(entradaPie)
     } catch (error) {
       res.status(404).json({
