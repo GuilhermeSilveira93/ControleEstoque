@@ -34,7 +34,7 @@ class Aside extends Component {
         <nav>
           <ul>
             <h2>Estoque</h2>
-            <li onClick={() => showDash()} style={{ cursor: 'pointer' }}><h1><MdDashboard color={"white"} size={IconSize} /> DashBoard</h1></li>
+            {this.temDireito('dashboard','Listar') ? <li onClick={() => showDash()} style={{ cursor: 'pointer' }}><h1><MdDashboard color={"white"} size={IconSize} /> DashBoard</h1></li> : ''}
             {this.temDireito('estoque','Listar') ? <li onClick={() => showEstoque()} style={{ cursor: 'pointer' }}><h1><BsBookFill color={"white"} size={IconSize} /> Estoque</h1></li> : ''}
             {this.temDireito('entrada','Listar') ? <li onClick={() => showEntrada()} style={{ cursor: 'pointer' }}><h3><MdAddCircle color={"white"} size={IconSize}/> Entrada</h3></li>:''}
             {this.temDireito('saida','Listar') ? <li onClick={() => showSaida()} style={{ cursor: 'pointer' }}><h3><AiFillMinusCircle color={'white'} size={IconSize}/> Saida</h3></li> :''}
