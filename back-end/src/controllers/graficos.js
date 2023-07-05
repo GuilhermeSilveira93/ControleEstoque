@@ -12,6 +12,7 @@ module.exports = {
         and plt.ID_PRODUTO = pd.ID_PRODUTO
         and lt.ID_CLIENTE is not null
         GROUP BY pd.S_NOME
+        order by 2
         `);
         return saidaBar[0]
       } catch (error) {
