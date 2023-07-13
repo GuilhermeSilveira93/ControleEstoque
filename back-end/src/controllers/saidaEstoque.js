@@ -45,5 +45,21 @@ module.exports = {
       SELECT LAST_INSERT_ID() ID_LOTE
       `)
     return id_lote[0]
+  },
+  async relatorioSaida(inicio, fim, empresa, cliente, produto) {
+    relatorioSaida = await knex.raw(`
+      select pro.S_NOME as PRODUTO,prlo.N_QUANTIDADE as QUANTIDADE,emp.S_NOME as EMPRESA,cl.S_NOME as CLIENTE,lt.ID_LOTE as ID_LOTE,DATE_FORMAT(lt.D_DATA_INICIO, '%d/%m/%Y') as DATA
+      from st_lote lt, st_produto pro, st_produto_lote prlo,st_cliente cl,st_empresa emp
+      where lt.ID_LOTE = prlo.ID_LOTE
+      and cl.ID_CLIENTE = lt.ID_CLIENTE
+      ${cliente !== '0' ? `and cl.ID_CLIENTE = ${cliente}` : ''}
+      and cl.ID_EMPRESA = emp.ID_EMPRESA
+      ${empresa !== '0' ? `and emp.ID_EMPRESA = ${empresa}` : ''}
+      and prlo.ID_PRODUTO = pro.ID_PRODUTO
+      ${produto !== '0' ? `and pro.ID_PRODUTO = ${produto}` : ''}
+      and lt.D_DATA_INICIO between '${inicio}' and '${fim}'
+      order by DATA
+    `)
+    return relatorioSaida[0]
   }
 }

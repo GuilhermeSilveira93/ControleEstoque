@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.968249d0.css",
-    "main.js": "/static/js/main.8f26b8d4.js",
+    "main.css": "/static/css/main.ee0c914f.css",
+    "main.js": "/static/js/main.3cfb40ca.js",
     "static/media/login.jpeg": "/static/media/login.c6ecde622510bdbe71a1.jpeg",
     "static/media/logo_prod.png": "/static/media/logo_prod.b9cd1efc6a0e02fac961.png",
     "static/media/logo_prod_branco.png": "/static/media/logo_prod_branco.218f41d02883db4cea78.png",
     "index.html": "/index.html",
-    "main.968249d0.css.map": "/static/css/main.968249d0.css.map",
-    "main.8f26b8d4.js.map": "/static/js/main.8f26b8d4.js.map"
+    "main.ee0c914f.css.map": "/static/css/main.ee0c914f.css.map",
+    "main.3cfb40ca.js.map": "/static/js/main.3cfb40ca.js.map"
   },
   "entrypoints": [
-    "static/css/main.968249d0.css",
-    "static/js/main.8f26b8d4.js"
+    "static/css/main.ee0c914f.css",
+    "static/js/main.3cfb40ca.js"
   ]
 }

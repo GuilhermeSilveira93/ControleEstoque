@@ -110,6 +110,28 @@ rotas.get("/inclusao.json", async (req, res) => {
       })
     }
   })
+  .get("/relatorioEntrada.json", async (req, res) => {
+    const {inicio,fim,fornecedor,produto}= req.query
+    try {
+      const relSaida = await entradaEstoque.relatorioEntrada(inicio,fim,fornecedor,produto)
+      return res.status(200).json(relSaida)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
+  .get("/relatorioSaida.json", async (req, res) => {
+    const {inicio,fim,empresa,cliente,produto}= req.query
+    try {
+      const relSaida = await saidaEstoque.relatorioSaida(inicio,fim,empresa,cliente,produto)
+      return res.status(200).json(relSaida)
+    } catch (error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  })
   .get("/consultaEmpresa.json", async (req, res) => {
     try {
       const empresa = await saidaEstoque.consultaEmpresa()

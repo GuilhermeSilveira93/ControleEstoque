@@ -179,6 +179,15 @@ main #saidaMercadoria #saidaEstoqueForm #Enviar {
   right: 0;
   bottom: 0;
 }
+main #entradaMercadoria #entradaEstoque #Inicio, main #entradaMercadoria #entradaEstoque #Fim,
+main #entradaMercadoria #saidaEstoqueForm #Inicio,
+main #entradaMercadoria #saidaEstoqueForm #Fim,
+main #saidaMercadoria #entradaEstoque #Inicio,
+main #saidaMercadoria #entradaEstoque #Fim,
+main #saidaMercadoria #saidaEstoqueForm #Inicio,
+main #saidaMercadoria #saidaEstoqueForm #Fim {
+  width: 30%;
+}
 main #tabela {
   max-height: 300px;
   padding: 1px;

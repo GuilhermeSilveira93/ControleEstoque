@@ -10,7 +10,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: false,
-      dashboard: false
+      dashboard: false,
+      relEntrada:false,
+      relSaida:false
     }
     this.showEntrada = this.showEntrada.bind(this)
     this.showSaida = this.showSaida.bind(this)
@@ -19,6 +21,8 @@ export default class Main extends Component {
     this.showProduto = this.showProduto.bind(this)
     this.showTipo = this.showTipo.bind(this)
     this.showDash = this.showDash.bind(this)
+    this.showRelatorioEntrada = this.showRelatorioEntrada.bind(this)
+    this.showRelatorioSaida = this.showRelatorioSaida.bind(this)
   }
   showDash() {
     this.setState({
@@ -28,7 +32,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: false,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showEntrada() {
@@ -39,7 +45,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: false,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showSaida() {
@@ -50,7 +58,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: false,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showEstoque() {
@@ -61,7 +71,9 @@ export default class Main extends Component {
       estoque: true,
       fornecedor: false,
       produto: false,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showFornecedor() {
@@ -72,7 +84,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: true,
       produto: false,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showProduto() {
@@ -83,7 +97,9 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: true,
-      tipo: false
+      tipo: false,
+      relEntrada:false,
+      relSaida:false
     })
   }
   showTipo() {
@@ -94,18 +110,67 @@ export default class Main extends Component {
       estoque: false,
       fornecedor: false,
       produto: false,
-      tipo: true
+      tipo: true,
+      relEntrada:false,
+      relSaida:false
+    })
+  }
+  showRelatorioEntrada(){
+    this.setState({
+      dashboard: false,
+      entrada: false,
+      saida: false,
+      estoque: false,
+      fornecedor: false,
+      produto: false,
+      tipo: false,
+      relEntrada:true,
+      relSaida:false
+    })
+  }
+  showRelatorioSaida(){
+    this.setState({
+      dashboard: false,
+      entrada: false,
+      saida: false,
+      estoque: false,
+      fornecedor: false,
+      produto: false,
+      tipo: false,
+      relEntrada:false,
+      relSaida:true
     })
   }
   render() {
-    const { entrada, saida, estoque, fornecedor, produto, tipo, dashboard } = this.state
+    const { entrada, saida, estoque, fornecedor, produto, tipo, dashboard,relEntrada,relSaida } = this.state
     const { direitos } = this.props
     return (
       <>
         <main>
-          <Aside direitos={direitos} showDash={this.showDash} showEstoque={this.showEstoque} showSaida={this.showSaida} showEntrada={this.showEntrada} logout={this.props.logout}
-            showFornecedor={this.showFornecedor} showProduto={this.showProduto} showTipo={this.showTipo} UserName={this.props.UserName} />
-          <Conteudo dashboard={dashboard} entrada={entrada} saida={saida} estoque={estoque} fornecedor={fornecedor} produto={produto} tipo={tipo} />
+          <Aside direitos={direitos}
+                 showDash={this.showDash}
+                 showEstoque={this.showEstoque}
+                 showSaida={this.showSaida}
+                 showEntrada={this.showEntrada}
+                 logout={this.props.logout}
+                 showFornecedor={this.showFornecedor}
+                 showProduto={this.showProduto}
+                 showTipo={this.showTipo}
+                 showRelatorioEntrada={this.showRelatorioEntrada}
+                 showRelatorioSaida={this.showRelatorioSaida}
+                 UserName={this.props.UserName}
+          />
+          <Conteudo
+                  dashboard={dashboard}
+                  entrada={entrada}
+                  saida={saida}
+                  estoque={estoque}
+                  fornecedor={fornecedor}
+                  produto={produto}
+                  tipo={tipo}
+                  relEntrada={relEntrada}
+                  relSaida={relSaida}
+          />
         </main>
       </>
     );
